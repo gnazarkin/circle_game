@@ -1,3 +1,29 @@
+function Game(circleCount, duration){
+	this.score = 0;
+	this.circles = [];
+	this.duration = (duration || 10) * 1000;
+	this.circleCount = circleCount || 10;
+
+
+	this.start= function(){
+		for (var i = 0; i < this.circleCount; i++){
+			this.circles.push(new Circle());
+			this.circles[i].render();
+			this.circles[i].move();
+		}
+
+		$('#score').text(this.score);
+		setTimeout(this.stop, this.duration);
+	}
+
+	this.stop = function(){
+		alert('GAME OVER!');
+		for(var i = 0; i < this.circleCount; i++){
+			game.circles[i].$me.remove();
+		}
+	};
+}
+
 function Circle(){
 	this.x = Math.random() * 450;
 	this.y = Math.random() * 450;
@@ -47,14 +73,8 @@ function Circle(){
 }
 
 $(document).ready(function(){
-
-	var circles = [];
-
-	for (var i = 0; i < 10; i++){
-		circles.push(new Circle());
-		circles[i].render();
-		circles[i].move();
-	}
+	var game = new Game();
+	game.start(10, 10);
 
 })
 
