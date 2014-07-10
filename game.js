@@ -13,15 +13,16 @@ function Game(circleCount, duration){
 		}
 
 		$('#score').text(this.score);
-		setTimeout(this.stop, this.duration);
+		var _this = this;
+		setTimeout(_this.stop, _this.duration);
 	}
 
-	this.stop = function(){
-		alert('GAME OVER!');
-		for(var i = 0; i < this.circleCount; i++){
-			game.circles[i].$me.remove();
-		}
-	};
+	this.stop = function() {
+    alert("GAME OVER!");
+    for (var i=0; i < window.game.circleCount; i++) {
+      window.game.circles[i].$me.remove();
+    }
+  };
 }
 
 function Circle(){
@@ -66,6 +67,7 @@ function Circle(){
         duration: 100,
         complete: function() {
           $(this).remove();
+          $('#score').text(window.game.score += 100);
         },
         queue: false
     });
@@ -73,8 +75,7 @@ function Circle(){
 }
 
 $(document).ready(function(){
-	var game = new Game();
-	game.start(10, 10);
-
+	window.game = new Game();
+	window.game.start(10, 10);
 })
 
