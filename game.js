@@ -4,15 +4,21 @@ function Circle(){
 	this.diameter = 30 + Math.random() * 50;
 	this.speed = 500 + Math.random() * 1500;
 
-	this.render = function() {
-		this.$me = $('<div class="circle"></div>')
-			.css('left', this.x)
-			.css('top', this.y)
-			.css('height', this.diameter)
-			.css('width', this.diameter)
 
-		$('#game').append(this.$me);
-	};
+	this.render = function() {
+    var _this = this;
+
+    this.$me = $('<div class="circle"></div>')
+      .css('left', this.x)
+      .css('top', this.y)
+      .css('height', this.diameter)
+      .css('width', this.diameter)
+      .on('click', function(){
+        _this.kill();
+      });
+
+    $('#game').append(this.$me);
+  };
 
 	this.move = function() {
 		var _this = this;
@@ -28,16 +34,16 @@ function Circle(){
 	};
 
 	this.kill = function() {
-		this.$me.css('background-color','red')
-			.effect({
-				effect: 'explode',
-				duration: 100,
-				complete: function() {
-					$(this).remove();
-				},
-				queue: false
-			})
-	}
+    this.$me.css('background-color', 'red')
+      .effect({
+        effect: 'explode',
+        duration: 100,
+        complete: function() {
+          $(this).remove();
+        },
+        queue: false
+    });
+  };
 }
 
 $(document).ready(function(){
